@@ -1,5 +1,3 @@
-# Cardiolog-a.-Braunwald.-12-Ed
-Aplicación Electron para el Braunwald de Cardiología 12ª ed. en español. Visor PDF integrado (scroll continuo, marcadores), menú en español e historial. Empaquetada para Windows (.exe) y Linux (.deb, AppImage, snap). Créditos: René Hernández Hernández.
 # 📘 Braunwald · Tratado de Cardiología (12ª ed.)
 
 Aplicación de escritorio multiplataforma que organiza y visualiza la 12ª edición del *Braunwald. Tratado de Cardiología* en español. Desarrollada con **Electron**, incluye un visor PDF integrado con desplazamiento continuo, marcadores laterales extraídos del documento, zoom dinámico y menú de navegación en español.

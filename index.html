@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Braunwald - Tratado de Cardiología 12ª Edición</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0c10 0%, #151921 50%, #0a0c10 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e6edf3;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: linear-gradient(145deg, #1c2128 0%, #252b36 100%);
+            border-radius: 24px;
+            border: 1px solid #2d333b;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #a29bfe);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #58a6ff, #a371f7, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .header h2 {
+            font-size: 1.4rem;
+            color: #8b949e;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #161b22 0%, #1f242c 100%);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid #2d333b;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-color-1);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4), 0 0 30px rgba(88, 166, 255, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2));
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--accent-color-1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 30px var(--accent-color-1);
+        }
+
+        .card-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #484f58;
+            background: #0d1117;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid #30363d;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f0f6fc;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover h3 {
+            color: var(--accent-color-1);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #8b949e;
+            line-height: 1.7;
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+            background: var(--accent-color-1);
+        }
+
+        /* Colores para cada tarjeta */
+        .card-1 { --accent-color-1: #ff6b6b; --accent-color-2: #ee5a5a; }
+        .card-2 { --accent-color-1: #4ecdc4; --accent-color-2: #44a08d; }
+        .card-3 { --accent-color-1: #45b7d1; --accent-color-2: #3498db; }
+        .card-4 { --accent-color-1: #96ceb4; --accent-color-2: #7cb89f; }
+        .card-5 { --accent-color-1: #feca57; --accent-color-2: #ff9f43; }
+        .card-6 { --accent-color-1: #ff6b9d; --accent-color-2: #c44569; }
+        .card-7 { --accent-color-1: #a29bfe; --accent-color-2: #6c5ce7; }
+        .card-8 { --accent-color-1: #fd79a8; --accent-color-2: #e84393; }
+        .card-9 { --accent-color-1: #00b894; --accent-color-2: #00a085; }
+        .card-10 { --accent-color-1: #e17055; --accent-color-2: #d63031; }
+        .card-11 { --accent-color-1: #74b9ff; --accent-color-2: #0984e3; }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(145deg, #161b22 0%, #1f242c 100%);
+            border-radius: 20px;
+            border: 1px solid #2d333b;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #58a6ff, #a371f7);
+            border-radius: 3px;
+        }
+
+        .footer-content {
+            color: #8b949e;
+        }
+
+        .footer-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #58a6ff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f0f6fc;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .footer-email {
+            font-size: 1rem;
+            color: #a371f7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid transparent;
+        }
+
+        .footer-email:hover {
+            color: #58a6ff;
+            border-color: #58a6ff;
+            background: rgba(88, 166, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #6e7681;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header h2 {
+                font-size: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .card h3 {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Braunwald</h1>
+            <h2>Tratado de Cardiología • 12ª Edición Español</h2>
+        </header>
+
+        <div class="cards-grid">
+            <a href="pdfs/Fundamentos de la medicina cardiovascular.pdf" class="card card-1">
+                <div class="card-header">
+                    <div class="card-icon">📚</div>
+                    <span class="card-number">01</span>
+                </div>
+                <h3>Fundamentos de la medicina cardiovascular</h3>
+                <p>Bases fisiológicas y anatómicas del sistema cardiovascular, principios fundamentales para la comprensión de la cardiología moderna.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Abordaje individualizado de la enfermedad cardiovascular.pdf" class="card card-2">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <span class="card-number">02</span>
+                </div>
+                <h3>Abordaje individualizado de la enfermedad cardiovascular</h3>
+                <p>Enfoque personalizado en el diagnóstico y tratamiento de las enfermedades cardiovasculares según las características del paciente.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Evaluación del paciente.pdf" class="card card-3">
+                <div class="card-header">
+                    <div class="card-icon">🔍</div>
+                    <span class="card-number">03</span>
+                </div>
+                <h3>Evaluación del paciente</h3>
+                <p>Métodos de evaluación clínica, historia médica, exploración física y técnicas diagnósticas para el paciente cardiovascular.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Cardiología Preventiva.pdf" class="card card-4">
+                <div class="card-header">
+                    <div class="card-icon">🛡️</div>
+                    <span class="card-number">04</span>
+                </div>
+                <h3>Cardiología Preventiva</h3>
+                <p>Estrategias de prevención primaria y secundaria, factores de riesgo cardiovascular y promoción de la salud cardíaca.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Enfermedad cardiovascular ateroesclerótica.pdf" class="card card-5">
+                <div class="card-header">
+                    <div class="card-icon">🫀</div>
+                    <span class="card-number">05</span>
+                </div>
+                <h3>Enfermedad cardiovascular ateroesclerótica</h3>
+                <p>Patogenia, diagnóstico y manejo de la ateroesclerosis y sus manifestaciones clínicas incluyendo síndromes coronarios.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Insuficiencia Cardíaca.pdf" class="card card-6">
+                <div class="card-header">
+                    <div class="card-icon">💔</div>
+                    <span class="card-number">06</span>
+                </div>
+                <h3>Insuficiencia Cardíaca</h3>
+                <p>Fisiopatología, clasificación, diagnóstico y tratamiento de la insuficiencia cardíaca aguda y crónica.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Arritmias, muerte súbita y síncope.pdf" class="card card-7">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <span class="card-number">07</span>
+                </div>
+                <h3>Arritmias, muerte súbita y síncope</h3>
+                <p>Trastornos del ritmo cardíaco, manejo de arritmias, prevención de muerte súbita y evaluación del síncope.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Enfermedades de las válvulas cardíacas.pdf" class="card card-8">
+                <div class="card-header">
+                    <div class="card-icon">🚪</div>
+                    <span class="card-number">08</span>
+                </div>
+                <h3>Enfermedades de las válvulas cardíacas</h3>
+                <p>Valvulopatías adquiridas y congénitas, diagnóstico por imagen y opciones terapéuticas médicas y quirúrgicas.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Enfermedades del miocardio, el pericardio y el lecho vascular pulmonar.pdf" class="card card-9">
+                <div class="card-header">
+                    <div class="card-icon">🫁</div>
+                    <span class="card-number">09</span>
+                </div>
+                <h3>Enfermedades del miocardio, el pericardio y el lecho vascular pulmonar</h3>
+                <p>Miocardiopatías, enfermedades pericárdicas, hipertensión pulmonar y enfermedades del circuito pulmonar.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Enfermedad Cardiovascular en poblaciones seleccionadas.pdf" class="card card-10">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <span class="card-number">10</span>
+                </div>
+                <h3>Enfermedad Cardiovascular en poblaciones seleccionadas</h3>
+                <p>Consideraciones especiales en mujeres, ancianos, población pediátrica y grupos étnicos específicos.</p>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="pdfs/Enfermedad Cardiovascular y trastornos de otros organos.pdf" class="card card-11">
+                <div class="card-header">
+                    <div class="card-icon">🔗</div>
+                    <span class="card-number">11</span>
+                </div>
+                <h3>Enfermedad Cardiovascular y trastornos de otros organos</h3>
+                <p>Interacciones entre enfermedades cardiovasculares y otras patologías sistémicas, abordaje multidisciplinario.</p>
+                <div class="card-arrow">→</div>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-title">Estructura y Digitalización</div>
+                <div class="footer-name">René Hernández Hernández</div>
+                <a href="mailto:renediana2014@gmail.com" class="footer-email">renediana2014@gmail.com</a>
+                <div class="footer-note">Organizador del contenido del Tratado de Cardiología Braunwald 12ª Edición</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
